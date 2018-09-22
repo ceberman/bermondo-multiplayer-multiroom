@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "bermondo + chat + multiroom",
   "dependencies": {
-    "express": "^4.10.2",
+    "express": "^4.16.3",
     "socket.io": "^1.2.0"
   }
 }
