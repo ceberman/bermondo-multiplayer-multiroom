@@ -1,9 +1,9 @@
 {
-  "name": "socket-chat-example",
+  "name": "bermondo-multiplayer-multiroom",
   "version": "0.0.1",
-  "description": "my first socket.io app",
+  "description": "bermondo + chat + multiroom",
   "dependencies": {
-    "express": "4.10.2",
-    "socket.io": "1.2.0",
+    "express": "^4.10.2",
+    "socket.io": "^1.2.0"
   }
 }
