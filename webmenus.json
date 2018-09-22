@@ -1,0 +1,115 @@
+{
+    "Drum Preset" : 	[
+                         "None",
+                         "Rock",
+                         "4 on the Floor",
+                         "4 on the Floor with Back Beat",
+                         "Soca 1",
+                         "Second Line",
+                         "Hip Hop 1" ,
+                         "Hip Hop 2" ,
+                         "Light Intro" ,
+                         "Latin 1",
+                         "Latin 2"
+                         ]
+    ,
+    "Kit Type" :      [
+                          "0",
+                          "1",
+                          "2",
+                          "3",
+                          "4"
+
+                        ]
+    ,
+    "Bass Pattern" : 	[
+                         "None",
+                         "Eighth Notes",
+                         "Quarter Notes" ,
+                         "Walking Bass 1",
+                         "Walking Bass 2",
+                         "Hound Dog",
+                         "Rhumba",
+                         "Bo Didley",
+                         "Polka",
+                         "Soul 1" ,
+                         "Soul 2" ,
+                         "Soca 1",
+                         "Soca 2",
+                         "Latin 1",
+                         "Latin 2"
+                         ]
+    ,
+    "Tonic" : 	[
+
+                     "C" ,
+                     "C#",
+                     "D" ,
+                     "D#" ,
+                     "E" ,
+                     "F" ,
+                     "F#",
+                     "G" ,
+                     "G#",
+                     "A" ,
+                     "A#"
+                 ]
+    ,
+    "Scale" : 	[
+                     "Major" ,
+                     "Dorian",
+                     "Mixolydian",
+                     "Melodic Minor" ,
+                     "Harmonic Minor",
+                     "Natural Minor" ,
+                     "Lydian"
+                     ]
+    ,
+    "Piano" : 	[
+                     "None",
+                     "Killer Joe" ,
+                     "Bo Didley" ,
+                     "Boogie" ,
+                     "Octave Eighths" ,
+                     "Stab On One" ,
+                     "Ska" ,
+                     "Triad Eighths" ,
+                     "LongChord" ,
+                     "Montuno",
+                     "Samba"
+                     ]
+    ,
+    "Tonal" : 	[
+                 "None" ,
+                 "Triad" ,
+                 "Seventh",
+                 "Fourths",
+                 "Fifths",
+                 "Scale"
+                 ]
+    ,
+    "Rhythm" :  [
+                "None",
+                "Sixteenth",
+                "Eighth",
+                "Quarter",
+                "Half",
+                "Whole"
+              ]
+    ,
+    "UpDown" :  [
+              "Up",
+              "Down",
+              "UpDown"
+    ]
+    ,
+    "Octave"  :  [
+              "0",
+              "1",
+              "2",
+              "3",
+              "-1",
+              "-2",
+              "-3"
+    ]
+}

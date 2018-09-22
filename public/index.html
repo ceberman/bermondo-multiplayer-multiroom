@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Internet Live Video Combo</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/sb-admin.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!--- from take picture -->
+    <script type="text/javascript" charset="utf-8" src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+
+    <!---
+    <script type="text/javascript" charset="utf-8" src="quantize.js"></script>
+    <script type="text/javascript" charset="utf-8" src="color-thief.js"></script>
+     -->
+    <style>
+        body {
+            background-image: url("images/musicStudio.jpg");
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+            <a class="navbar-brand" href="index.html">Internet Live Video Combo</a>
+            </div>
+            <!-- Top Menu Items -->
+
+
+        </nav>
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                <div class="row login-div">
+                    <div class="col-lg-6">
+
+
+
+                        <h1>Enter your screen name</h1>
+
+                        <form role="form">
+
+                            <div class="form-group input-group">
+                                <span class="input-group-addon">@</span>
+                                <input type="text" class="usernameInput" maxlength="14" placeholder="Username">
+                                    </div>
+
+                        </form>
+
+                    </div>
+            </div> <!-- login-div -->
+
+     <div id="content page" class="col-lg-6 all-other-content"  >
+
+    <div class="row">
+       <ul class="nav navbar-left top-nav">
+                           <li class="dropdown">
+               <a href="#RoomSelection" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i>
+                 Select room
+                 <b class="caret"></b>
+               </a>
+               <ul class="dropdown-menu alert-dropdown">
+                 <div id="rooms"></div>
+               </ul>
+           </li>
+       </ul>
+       <a class="navbar-text navbar-right">
+         <div id="currentRoom"></div>
+       </a>
+    </div>
+
+
+
+                         <form role="form">
+                    <div class="row">
+                            <div id="Rhythm Section" class="form-group">
+                                <h1> Rhythm Section </h1>
+                                <div id="Drum Preset" class="col-xs-6 form-group">
+                                    <label>Drum Preset</label>
+                                    </div>
+                                <div id="Kit Type" class="col-xs-6 form-group">
+                                    <label>Kit Type</label>
+                                    </div>
+                                <div id="Bass Pattern" class="col-xs-6 form-group">
+                                    <label>Bass Pattern</label>
+                                    </div>
+                               </div>
+                    </div>  <!-- end row -->
+                    <div class="row">
+
+                        <div id="Keyboard" class="form-group">
+                            <h1>Piano</h1>
+                            <div id="Piano" class="col-xs-6 form-group">
+                                <label>Piano</label>
+                            </div>
+                            <div id="Pad" class="col-xs-6 form-group">
+                                <label>Pad</label>
+                            </div>
+                        </div>
+
+                    </div>  <!-- end row -->
+
+                    <div class="row">
+
+                            <div id="Tonality" class="form-group">
+                                <h1>Tonality</h1>
+                                <div id="Tonic" class="col-xs-6 form-group">
+                                    <label>Tonic</label>
+                                    </div>
+                                <div id="Scale" class="col-xs-6 form-group">
+                                    <label>Scale</label>
+                                    </div>
+                            </div>
+
+                    </div>  <!-- end row -->
+
+                    <div class="row">
+
+                            <div id="Arpeggiator" class="form-group">
+                                <h1>Arpeggiator</h1>
+                                <div id="Tonal" class="col-xs-6 form-group">
+                                    <label>Tonal</label>
+                                    </div>
+                                <div id="Rhythm" class="col-xs-6 form-group">
+                                    <label>Rhythm</label>
+                                    </div>
+                                <div id="UpDown" class="col-xs-6 form-group">
+                                    <label>UpDown</label>
+                                    </div>
+                                <div id="Octave" class="col-xs-6 form-group">
+                                    <label>Octave</label>
+                                    </div>
+                            </div>
+
+                    </div>  <!-- end row -->
+
+              </div>
+
+
+
+            </form>
+
+
+
+        </div>
+        <!-- /.row -->
+
+                <div id="Band Chatter" class="container band-chatter-div">
+
+                        <br><br>
+                        <link href="ceb-style.css" rel="stylesheet">
+                        <ul>
+                            <li class="chat page">
+                                <div class="chatArea">
+                                    <h1>Band Chatter</h1>
+                                    <ul class="messages" ></ul>
+                                </div>
+                                <input class="inputMessage" placeholder="Type here..."/>
+
+                            </li>
+                        </ul>
+                </div>
+                <!-- Band Chatter -->
+
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script> 
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- ceb added from chat demo index.html -->
+<!--    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>  -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/main.js"></script>
+
+
+</body>
+
+</html>
