@@ -88,27 +88,30 @@ io.on('connection', function (socket) {
 
       // when the client emits 'add user', this listens and executes
       socket.on('add user', function (username) {
+                addedUser = true;
                 // we store the username in the socket session for this client
                 socket.username = username;
-                // multiroom additions
-                socket.room = defaultRoom;
-                socket.join(defaultRoom);
+
+
 
                 // add the client's username to the global list
                 userEntersRoomDataStructures(defaultRoom, username)
-                addedUser = true;
 
+                userEntersRoomSocketActions(socket, defaultRoom, username);
+/*
+                // multiroom additions
+                socket.room = defaultRoom;
+                socket.join(defaultRoom);
                 socket.emit('login', {
                             numUsers: allRoomUserCounts[defaultRoom]
                             });
 
-                // used only for the HTML client
-                socket.emit('set menus', allMenus);
+
 
                 // ceb
                 emitCatchup(socket, defaultRoom);
 
-                //
+                // this should be superfluous...to be taken out
                 socket.emit('new message', {
                   username: 'SERVER',
                   message: 'you have connected to waitingRoom'});
@@ -121,7 +124,10 @@ io.on('connection', function (socket) {
                                       });
 
                 socket.emit('updaterooms', rooms, defaultRoom);
-
+*/
+                // used only for the HTML client
+                socket.emit('set menus', allMenus);
+/*
                 // ceb
                 // for Unity/C# applications, need a well formed object with keys
                 // Unity (by default at least) does not support .NET 4
@@ -133,11 +139,12 @@ io.on('connection', function (socket) {
                 //
                 var roomDataStruct = {roomArray : rooms, currentRoom : defaultRoom};
                 socket.emit('updateroomsJson', roomDataStruct);
-
+*/
 
                 });
 
         socket.on('switchRoom', function(newroom){
+/*
                   // sent message to OLD room
                   socket.broadcast.to(socket.room).emit('new message', 'SERVER', socket.username+' has left this room');
                   // echo globally that this client has left
@@ -147,7 +154,11 @@ io.on('connection', function (socket) {
                                         });
 
               		socket.leave(socket.room);
+*/
                   userLeavesRoomDataStructures(socket.room, socket.username);
+                  userLeavesRoomSocketActions(socket);
+
+/*
               		socket.join(newroom);
               		socket.emit('new message', {
                     username: 'SERVER',
@@ -165,8 +176,11 @@ io.on('connection', function (socket) {
                   // bermondo specific
                   var roomDataStruct = {roomArray : rooms, currentRoom : newroom};
                   socket.emit('updateroomsJson', roomDataStruct);
-                  userEntersRoomDataStructures(newroom, socket.username)
                   emitCatchup(socket, newroom);
+  */
+                  userEntersRoomDataStructures(newroom, socket.username);
+                  userEntersRoomSocketActions(socket, newroom, socket.username);
+
 
               	});
 
@@ -191,23 +205,14 @@ io.on('connection', function (socket) {
             // if (usernames.hasOwnProperty(socket.username)) {
                   // remove the username from global usernames list
                   userLeavesRoomDataStructures(socket.room, socket.username);
-                  /*
-                  var usernames = allRoomUserNames[socket.room];
-                  delete usernames[socket.username];
-                  allRoomUserCounts[socket.room] = allRoomUserCounts[socket.room] - 1;
-
-                  // ceb
-                  if (allRoomUserCounts[socket.room] <= 0) {
-                    emptyRoomDataStructures(socket.room);
-                  }
-                  */
-
+                  userLeavesRoomSocketActions(socket);
+/*
                   // echo globally that this client has left
                   socket.broadcast.to(socket.room).emit('user left', {
                                         username: socket.username,
                                         numUsers: allRoomUserCounts[socket.room]
                                         });
-
+*/
             } else {
               // this seems to happen if client disconnects before giving logging in
               console.log("Warning: received disconnect for unknown user %s", socket.username);
@@ -217,7 +222,23 @@ io.on('connection', function (socket) {
 
       });
 
-// ceb
+function userLeavesRoomSocketActions(socket)
+{
+/*
+  // sent message to OLD room
+  socket.broadcast.to(socket.room).emit('new message', {
+                        username: 'SERVER',
+                        message: (socket.username+' has left this room')
+                        });
+*/
+  // echo globally that this client has left
+  socket.broadcast.to(socket.room).emit('user left', {
+                        username: socket.username,
+                        numUsers: allRoomUserCounts[socket.room]
+                        });
+
+  socket.leave(socket.room);
+}
 
 // handling user enter and leave
 function userLeavesRoomDataStructures(roomName, userName)
@@ -240,6 +261,34 @@ function userLeavesRoomDataStructures(roomName, userName)
   if (allRoomUserCounts[roomName] <= 0) {
     emptyRoomDataStructures(roomName);
   }
+}
+
+function userEntersRoomSocketActions(socket, roomName, userName)
+{
+  // multiroom additions
+  socket.username = userName;
+  socket.room = roomName;
+  socket.join(roomName);
+  socket.emit('login', {
+              numUsers: allRoomUserCounts[roomName]
+              });
+
+  // ceb
+  emitCatchup(socket, roomName);
+/*
+  // this should be superfluous...to be taken out
+  socket.emit('new message', {
+    username: 'SERVER',
+    message: ('you have connected to ' + roomName)});
+*/
+
+  // echo globally (all clients) that a person has connected
+  socket.broadcast.to(socket.room).emit('user joined', {
+                        username: socket.username,
+                        numUsers: allRoomUserCounts[socket.room]
+                        });
+
+  socket.emit('updaterooms', rooms, roomName);
 }
 
 function userEntersRoomDataStructures(roomName, userName)
