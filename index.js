@@ -4,8 +4,15 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var port = process.env.PORT || 3003;
+// add timestamps in front of log messages
+require('console-stamp')(console, 'yyyy/mm/dd HH:MM:ss');
 
-var debugLevel = 10;
+
+var versionString = "bermondo-multiplayer-multiroom v0.1";
+var debugLevel = 0;
+
+console.log(versionString);
+console.log("debugLevel = " + debugLevel);
 
 server.listen(port, function () {
               console.log('Server listening at port %d', port);
@@ -70,7 +77,7 @@ io.on('connection', function (socket) {
                 // logCommand(defaultRoom, );
                 logMenuCommand(socket.room, data);
                 if (debugLevel > 0) {
-                  console.log('new menuCommand: ');
+                  console.info('new menuCommand: ');
                   consolePrintMenuCommandObject(data);
                   consolePrintCommandDictionary(socket.room);
                 }
@@ -88,6 +95,7 @@ io.on('connection', function (socket) {
 
       // when the client emits 'add user', this listens and executes
       socket.on('add user', function (username) {
+                console.log("add user: " + username);
                 addedUser = true;
                 // we store the username in the socket session for this client
                 socket.username = username;
@@ -155,6 +163,8 @@ io.on('connection', function (socket) {
 
               		socket.leave(socket.room);
 */
+                  console.log("switch room: user = " + socket.username
+                    + " leaving : " + socket.room + " entering: " + newroom);
                   userLeavesRoomDataStructures(socket.room, socket.username);
                   userLeavesRoomSocketActions(socket);
 
@@ -184,6 +194,7 @@ io.on('connection', function (socket) {
 
               	});
 
+/*
       // when the client emits 'typing', we broadcast it to others
       socket.on('typing', function () {
                 socket.broadcast.to(socket.room).emit('typing', {
@@ -197,12 +208,14 @@ io.on('connection', function (socket) {
                                       username: socket.username
                                       });
                 });
+*/
 
       // when the user disconnects.. perform this
       socket.on('disconnect', function () {
 
             if (addedUser) {
-            // if (usernames.hasOwnProperty(socket.username)) {
+                  console.log("disconnect: user = " + socket.username + ", room = " + socket.room);
+                  // if (usernames.hasOwnProperty(socket.username)) {
                   // remove the username from global usernames list
                   userLeavesRoomDataStructures(socket.room, socket.username);
                   userLeavesRoomSocketActions(socket);
@@ -215,7 +228,7 @@ io.on('connection', function (socket) {
 */
             } else {
               // this seems to happen if client disconnects before giving logging in
-              console.log("Warning: received disconnect for unknown user %s", socket.username);
+              console.warn("received disconnect for unknown user %s", socket.username);
             }
 
         });
@@ -246,19 +259,20 @@ function userLeavesRoomDataStructures(roomName, userName)
   var usernames = allRoomUserNames[roomName];
   if (usernames == undefined) {
     // shouldn't happen
-    console.log("userLeavesDataStructure(%s, %s), no usernames", roomName, userName);
+    console.error("userLeavesDataStructure(%s, %s), no usernames", roomName, userName);
     return;
   }
   delete usernames[userName];
   if (allRoomUserCounts[roomName] == undefined) {
     // shouldn't happen
-    console.log("userLeavesDataStructure(%s, %s), no allRoomUserCounts[%s]", roomName, userName, roomName);
+    console.error("userLeavesDataStructure(%s, %s), no allRoomUserCounts[%s]", roomName, userName, roomName);
     return;
   }
   allRoomUserCounts[roomName] = allRoomUserCounts[roomName] - 1;
 
   // ceb
   if (allRoomUserCounts[roomName] <= 0) {
+    console.log("room: " + roomName + " is now empty, clearing data structures");
     emptyRoomDataStructures(roomName);
   }
 }
@@ -302,18 +316,18 @@ function userEntersRoomDataStructures(roomName, userName)
 function confirmOrCreateRoomDataStructures(roomName) {
   if (allRoomCommands.hasOwnProperty(roomName)) {
     if (debugLevel > 0) {
-      console.log("confirmOrCreateRoomDataStructures(%s): already exists", roomName);
+      console.info("confirmOrCreateRoomDataStructures(%s): already exists", roomName);
     }
   } else {
     createRoomDataStructures(roomName);
     if (debugLevel > 0) {
-      console.log("confirmOrCreateRoomDataStructures(%s): NEED TO CREATE", roomName);
+      console.info("confirmOrCreateRoomDataStructures(%s): NEED TO CREATE", roomName);
     }
   }
 }
 function createRoomDataStructures(roomName) {
-  if (debugLevel > 0) {
-    console.log("createRoomDataStructures(%s)", roomName);
+  if (debugLevel > 9) {
+    console.info("createRoomDataStructures(%s)", roomName);
   }
   var newRoomCommandDictionary = {};
   allRoomCommands[roomName] = newRoomCommandDictionary;
@@ -323,15 +337,15 @@ function createRoomDataStructures(roomName) {
 }
 
 function deleteRoomDataStructures(roomName) {
-  if (debugLevel > 0) {
-    console.log("deleteRoomDataStructures(%s)", roomName);
+  if (debugLevel > 9) {
+    console.info("deleteRoomDataStructures(%s)", roomName);
   }
   delete allRoomCommands[roomName];
 }
 
 function emptyRoomDataStructures(roomName) {
-  if (debugLevel > 0) {
-    console.log("emptyRoomDataStructures(%s)", roomName);
+  if (debugLevel > 9) {
+    console.info("emptyRoomDataStructures(%s)", roomName);
   }
   var commandDictionary = allRoomCommands[roomName];
   for (var commandName in commandDictionary) {
@@ -355,7 +369,7 @@ function logMenuCommand(roomName, commandObject) {
 function consolePrintCommandDictionary(roomName)
 {
   var commandDictionary = allRoomCommands[roomName];
-  console.log("room: %s.commandDictionary ------->", roomName);
+  console.info("room: %s.commandDictionary ------->", roomName);
   for (var commandName in commandDictionary) {
     if (commandDictionary.hasOwnProperty(commandName)) {
       var commandObject = commandDictionary[commandName];
@@ -367,8 +381,8 @@ function consolePrintCommandDictionary(roomName)
 function emitCatchup(socket, roomName)
 {
   var commandDictionary = allRoomCommands[roomName];
-  if (debugLevel > 0) {
-    console.log('room: %s.emitCatchup: commandDictionary ------->', roomName);
+  if (debugLevel > 9) {
+    console.info('room: %s.emitCatchup: commandDictionary ------->', roomName);
     consolePrintCommandDictionary(roomName);
   }
   for (var commandName in commandDictionary) {
@@ -383,5 +397,5 @@ function emitCatchup(socket, roomName)
 
 function consolePrintMenuCommandObject(singleMenuObject)
 {
-  console.log('===>menuName = %s, menuItem = %s', singleMenuObject['menuName'], singleMenuObject['menuItem']);
+  console.info('===>menuName = %s, menuItem = %s', singleMenuObject['menuName'], singleMenuObject['menuItem']);
 }
