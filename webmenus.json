@@ -79,7 +79,7 @@
                      "Samba"
                      ]
     ,
-    "Tonal" : 	[
+    "SynthTonal" : 	[
                  "None" ,
                  "Triad" ,
                  "Seventh",
@@ -88,7 +88,7 @@
                  "Scale"
                  ]
     ,
-    "Rhythm" :  [
+    "SynthRhythm" :  [
                 "None",
                 "Sixteenth",
                 "Eighth",
@@ -97,13 +97,13 @@
                 "Whole"
               ]
     ,
-    "UpDown" :  [
+    "SynthUpDown" :  [
               "Up",
               "Down",
               "UpDown"
     ]
     ,
-    "Octave"  :  [
+    "SynthOctave"  :  [
               "0",
               "1",
               "2",
@@ -111,5 +111,22 @@
               "-1",
               "-2",
               "-3"
+    ]
+    ,
+    "VideoOffOn" : [
+            "0", "1"
+    ]
+
+    ,
+    "VideoClip" : [
+            "0", "1", "2", "3"
+    ]
+    ,
+    "DancerOffOn" : [
+            "0",  "1"
+    ]
+    ,
+    "DancerSize" : [
+            "0", "1", "2"
     ]
 }

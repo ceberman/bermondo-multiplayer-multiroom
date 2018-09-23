@@ -118,7 +118,28 @@ $(function() {
         sendPlayerPosition(-7, 3.5, 5.5, 0.0, 60.0, 0.0);
     } else if (menuName === "Scale") {
         sendPlayerPosition(-8.5, 3.6, 11.2, 0.0, 0.0, 0.0);
+
+
+    } else if (menuName === "SynthTonal") {
+      sendPlayerPosition(0.6, 1.5, 10.5, 22.0, -171.0, -20.0);
+    } else if (menuName === "SynthRhythm") {
+      sendPlayerPosition(0.6, 1.5, 10.5, 22.0, -171.0, -20.0);
+    } else if (menuName === "SynthUpDown") {
+      sendPlayerPosition(0.6, 1.5, 10.5, 22.0, -171.0, -20.0);
+    } else if (menuName === "SynthOctave") {
+      sendPlayerPosition(0.6, 1.5, 10.5, 22.0, -171.0, -20.0);
+
+
+    } else if (menuName === "Video OffOn") {
+      sendPlayerPosition(3.0, 3.8, -12.0, 0.0, 0.0, 0.0);
+    } else if (menuName === "Video Clip") {
+      sendPlayerPosition(3.0, 3.8, -12.0, 0.0, 0.0, 0.0);
+    } else if (menuName === "DancerOffOn") {
+      sendPlayerPosition(3.0, 3.8, -12.0, 0.0, 0.0, 0.0);
+    } else if (menuName === "Dancer Size") {
+      sendPlayerPosition(3.0, 3.8, -12.0, 0.0, 0.0, 0.0);
     }
+
   }
 
     function sendPlayerPosition (posX, posY, posZ, rotX, rotY, rotZ) {
